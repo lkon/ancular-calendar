@@ -1,0 +1,22 @@
+<div class="calendar__table" >
+    <div class="calendar__table__caption">{{ choozenYear || currentYear }}</div>
+    <ul class="calendar__table__body" ng-init="showYear()">
+    <!-- Полезно для начальной загрузке: -->
+    <!-- <li ng-repeat="month in gottedYear" ng-class="{{ month.engName == choozenMonth && 'active' || '' }}"> -->
+        <!-- динамическое изменение класса -->
+        <!-- <li ng-repeat="month in gottedYear" ng-class="{ active_static : !choozenMonth && $index == currentMonth, active_dinamic : month.engName == choozenMonth }"> -->
+        <!-- <li ng-repeat="month in gottedYear" active-element data-current="{{ month.engName == choozenMonth }}"> -->
+        <!-- <li ng-repeat="month in gottedYear" active-element ng-class="{active : month.engName == choozenMonth }"> -->
+        <li ng-repeat="month in gottedYear" active-element>
+            <div class="archive-cell__wrap-out" ng-switch on="_.isUndefined( month.src )">
+                <a href="http://rbcdaily.ru/{{ month.src }}" class="archive-cell" ng-switch-when="false">
+                    <span class="archive-date archive-date__has_periodical" >{{ month.name | getName }}</span>
+                    <span class="archive-periodical">{{ month.num }}</span>
+                </a>
+                <span class="archive-cell" ng-switch-default>
+                    <span class="archive-date ">{{ month.name | getName }}</span>
+                </span>
+            </div>
+        </li>
+    </ul>
+</div>

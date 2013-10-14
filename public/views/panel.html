@@ -1,0 +1,30 @@
+<div class="calendar">
+    <button class="calendar__init" ng-click="toggleCalendar()">Архив журнала</button>
+    
+    <div class="calendar__body" ng-show="state">
+        <div class="calendar__manage">
+            <div class="calendar__manage__rule">
+                <label class="calendar__manage__label">Месяц:</label>
+                <!-- <select name="" id="" ng-model="month" ng-options="month.name for month in months"></select> -->
+                <select name="" id="" ng-model="choozenMonth">
+                    <!-- <option ng-repeat="month in months" value="{{ month.engName }}" ng-selected="$index == currentMonth">{{ month.ruName }}</option> -->
+                    <option ng-repeat="month in months" value="{{ month.engName }}" selected-element>{{ month.ruName }}</option>
+                </select>
+            </div>
+            <div class="calendar__manage__rule">
+                <label class="calendar__manage__label">год:</label>
+                <select name="" id="" ng-model="choozenYear" ng-change="showYear()">
+                    <option ng-repeat="year in years" value="{{ year.name }}" ng-selected="year.name == ( choozenYear || currentYear )">{{ year.name }}</option>
+                </select>
+            </div>
+            <div class="clear"></div>
+        </div>
+        <div class="calendar__slider">
+            <!-- <div class="calendar__slider__rule_left" ng-class="{ active: ( choozenYear || currentYear ) != years[ 0 ].name }" ng-click="getprev()"></div> -->
+            <div class="calendar__slider__rule_left" ng-class="{ active : hasSiblings( {data:years, index:'first'} ) }" ng-click="getprev()"></div>
+            <year></year>
+            <!-- <div class="calendar__slider__rule_right" ng-class="{ active: ( choozenYear || currentYear ) != years[ years.length - 1 ].name }" ng-click="getNext()"></div> -->
+            <div class="calendar__slider__rule_right" ng-class="{ active : hasSiblings( {data:years, index:'last'} ) }" ng-click="getNext()"></div>
+        </div>
+    </div>
+</div>
