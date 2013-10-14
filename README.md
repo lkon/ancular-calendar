@@ -6,11 +6,9 @@ This project is an application skeleton for a typical [AngularJS](http://angular
 
 Clone the ancular-calendar repository 
 
-### Running the app during development
+* install node.js and run `node scripts/web-server.js`
 
-* install node.js and run `scripts/web-server.js`
-
-Then navigate your browser to `http://localhost:<port>/app/index.html` to see the app running in
+Then navigate your browser to `http://localhost:8000//public/index.html#!/` to see the app running in
 your browser.
 
 ## Contact
