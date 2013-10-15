@@ -4,12 +4,12 @@
 
 angular.module( 'calendar.services', [ 'ngResource', 'angular-underscore' ])
     .factory( 'Year', [ '$resource', function ( $resource ) {
-        return $resource( '/app/json/:yearId.json', {}, { 
-            query : { 
+        return $resource( '/app/json/:yearId.json', {}, {
+            query : {
                 method : 'GET'
               , params : { yearId : "years" }
               , isArray: true
-            } 
+            }
         } );
     }])
     .service( 'DataService', [ '$window', '_', function( $window, _ ){
@@ -24,7 +24,7 @@ angular.module( 'calendar.services', [ 'ngResource', 'angular-underscore' ])
               , year : year
             };
         }
-        
+
         function getMonths () {
             var months = ['Январь','Февраль','Март','Апрель','Май','Июнь','Июль','Август','Сентябрь','Октябрь','Ноябрь','Декабрь']
               , monthsObj = [];
@@ -71,7 +71,7 @@ angular.module( 'calendar.services', [ 'ngResource', 'angular-underscore' ])
                                                                     }
                     );
                 }
-                
+
             })
             gottedLink.sort( sortYear );
             return gottedLink;

@@ -1,14 +1,14 @@
 'use strict';
 
 angular.module('calendar.controllers', [ 'angular-underscore' ])
-    .controller('PanelController', [ '$scope', '$routeParams', '$location', 'Year', '_', 'DataService'
-     , function( $scope, $routeParams, $location, Year, _, DataService ) {
+    .controller('PanelController', [ '$scope', '$http', '$routeParams', '$location', 'Year', '_', 'DataService'
+     , function( $scope, $http, $routeParams, $location, Year, _, DataService ) {
         $scope._ = _;
         $scope.$location = $location;
         $scope.state = false;
         $scope.toggleCalendar = incopsulation();
         $scope.years = Year.query({}, function success( years ){
-        
+
             $scope.hasSiblings = function( option ){
                 if ( option.index == 'first' ){
                     if ( ( this.choozenYear || this.currentYear ) != option.data[ 0 ][ 'name' ] ){
@@ -21,7 +21,7 @@ angular.module('calendar.controllers', [ 'angular-underscore' ])
                 }
                 return false;
             }
-            
+
         }, function error(value ){
             console.log(value)
         });
@@ -31,12 +31,33 @@ angular.module('calendar.controllers', [ 'angular-underscore' ])
 
         $scope.showYear = function () {
             var yearId = this.choozenYear !== undefined ? this.choozenYear : $routeParams[ 'yearId' ]
-              , gottedYear = Year.query( { yearId : yearId }, function(){
+              , gottedYear /* = Year.query( { yearId : yearId }, function(){
                     $scope.gottedYear = DataService.prepareData( gottedYear );
+                }) */;
+
+
+                /* так как возвращаемым значением функции $http является promise,
+                *  вы можете использовать метод then чтобы регистрировать колбэк,
+                *  и они будут получать только один аргумент – объект представляющий ответ сервера.
+                */
+/*             $http.get( '/app/json/:yearId.json', { yearId : yearId } ).then( function ( response ){
+                gottedYear = response.data;
+                $scope.gottedYear = DataService.prepareData( gottedYear );
+            }); */
+
+            $http( {
+                    method : 'GET'
+                  , url    : '/app/json/years.json'
+                })
+                .success( function ( data, status, headers, config ){
+                    console.log(status)
+                })
+                .error( function ( data, status, headers, config ){
+                    console.log(status)
                 });
         };
 
-        
+
         $scope.getprev = function(){
             var _year = parseInt( $scope.choozenYear, 10 ) || $scope.currentYear
               , prevYear;
@@ -80,7 +101,7 @@ angular.module('calendar.controllers', [ 'angular-underscore' ])
             }
         }
 
-        
+
         /* Helpers */
         function incopsulation () {
             var count = 0;
